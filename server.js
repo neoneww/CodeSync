@@ -12,6 +12,11 @@ const io = require('socket.io')(server, {
 	},
 });
 
+app.use(express.static('build'));
+app.use((req, res, next) => {
+	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
 	return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
@@ -60,16 +65,8 @@ io.on('connection', (socket) => {
 		socket.leave();
 	});
 });
+const PORT = process.env.PORT || 5000;
 
-server.listen(5000, () => {
-	console.log('working');
+server.listen(PORT, () => {
+	console.log('Server Running');
 });
-
-// const io = require('socket.io')(5000, {
-// 	cors: {
-// 		origin: ['http://localhost:3000'],
-// 	},
-// });
-// io.on('connection', (socket) => {
-// 	console.log(socket.id);
-// });
