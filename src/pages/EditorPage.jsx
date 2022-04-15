@@ -64,7 +64,7 @@ const EditorPage = () => {
 		init();
 
 		return () => {
-			socketRef.current.disconnet();
+			socketRef.current.disconnect();
 			socketRef.current.off(ACTIONS.JOINED);
 			socketRef.current.off(ACTIONS.DISCONNECTED);
 		};
